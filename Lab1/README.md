@@ -6,11 +6,12 @@
 2. IP адреса внутренней сети начинаются с 12-14
 3. Все остальные IP адреса относятся к внешним узлам
 
-RStudioCloud
+RStudio
 
 ## Исходные данные
 
-RStudioCloud
+RStudio
+traffic_security.csv
 
 ## Код программы
 
