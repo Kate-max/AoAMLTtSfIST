@@ -78,3 +78,29 @@ select(arrange(answer2,desc(bytes)) %>% top_n(1),src)
 
 ## 12.55.77.96
 ```
+### Задание 3
+
+Поиск утечки данных 3
+
+```{r}
+library (dplyr)
+
+# Z оценка (стандартная оценка) - этот балл помогает понять, больше или меньше значение данных, чем среднее, и насколько оно далеко от среднего. 
+# Z баллов = (среднее значение x) / std. отклонение
+
+#находим "аномальный" порт с помощью стандартной оценки (находим max)
+ports <- df %>%
+  filter(src != "13.37.84.125") %>% #не адрес из 1 пункта
+  filter(src != "12.55.77.96") %>% #не адрес из 2 пункта
+  filter(src_info == TRUE) %>% #исходящий трафик
+  filter(dst_info == FALSE) %>%
+  group_by (port) %>%
+  summarise(port,Z_оценка = ((bytes-mean(bytes))/sd(bytes)))
+
+select(arrange(ports,desc(Z_оценка)) %>% top_n(1),port)  
+#port 124 - 20.15162  
+
+select(arrange(port_src,desc(bytes_sum)) %>% top_n(1),src)
+
+## 12.30.96.87
+```
